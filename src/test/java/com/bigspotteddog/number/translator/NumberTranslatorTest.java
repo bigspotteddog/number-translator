@@ -21,5 +21,13 @@ public class NumberTranslatorTest extends TestCase {
         String words = translator.translate(1, "en-US");
         assertNotNull(words);
         assertEquals("one", words);
+
+        words = translator.translate(0, "en-US");
+        assertNotNull(words);
+        assertEquals("zero", words);
+
+        words = translator.translate(13, "en-US");
+        assertNotNull(words);
+        assertEquals("thirteen", words);
     }
 }

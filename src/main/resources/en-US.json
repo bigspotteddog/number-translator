@@ -1,6 +1,8 @@
 {
     "name": "en-US",
     "numbers": {
-        1: "one"
+        0: "zero",
+        1: "one",
+        13: "thirteen"
     }
 }

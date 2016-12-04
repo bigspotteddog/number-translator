@@ -6,7 +6,8 @@ public class NumberTranslator {
 
     public String translate(long number, String languageCode) throws IOException {
         Language language = LanguageFactory.instance().getLanguage(languageCode);
-        return language.getNumber((int) number);
+        String words = language.getNumber((int) number);
+        return words;
     }
 
 }
