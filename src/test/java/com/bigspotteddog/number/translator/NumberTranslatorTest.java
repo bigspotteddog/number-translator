@@ -1,15 +1,20 @@
 package com.bigspotteddog.number.translator;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 public class NumberTranslatorTest extends TestCase {
 
-    public void test() {
-        LanguageFactory factory = LanguageFactory.instance();
-        Language language = new Language("en-US");
-        language.addNumber(1, "one");
-        factory.register("en-US", language);
+    private LanguageFactory factory;
 
+    @Override
+    protected void setUp() throws Exception {
+        factory = LanguageFactory.instance();
+        factory.clearLanguages();
+    }
+
+    public void test() throws IOException {
         NumberTranslator translator = new NumberTranslator();
         assertNotNull(translator);
 

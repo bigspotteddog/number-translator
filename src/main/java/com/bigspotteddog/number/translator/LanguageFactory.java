@@ -1,14 +1,20 @@
 package com.bigspotteddog.number.translator;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
 public class LanguageFactory {
+    private static final Logger log = Logger.getLogger(LanguageFactory.class.getName());
+
     private Map<String, Language> languages = new ConcurrentHashMap<String, Language>();
 
     private static final class LanguageFactoryHolder {
@@ -22,14 +28,27 @@ public class LanguageFactory {
     }
 
     public Language getLanguage(String name) {
+        if (log.isLoggable(Level.FINE)) {
+            log.fine(MessageFormat.format("Retrieving language {0}", name));
+        }
+
         Language language = languages.get(name);
         if (language == null) {
-            language = getLanguageFromResource(name);
+            if (log.isLoggable(Level.FINE)) {
+                log.fine(MessageFormat.format("Language {0} not found", name));
+            }
+            try {
+                language = getLanguageFromResource(name);
+            } catch (IOException e) {
+                if (log.isLoggable(Level.SEVERE)) {
+                    log.severe(MessageFormat.format("Unable to load language: {0}", name));
+                }
+            }
         }
         return language;
     }
 
-    private Language getLanguageFromResource(String name) {
+    private Language getLanguageFromResource(String name) throws IOException {
         Language language = null;
         String json = getJsonFromResource(name);
         if (json != null) {
@@ -39,16 +58,19 @@ public class LanguageFactory {
         return language;
     }
 
-    private String getJsonFromResource(String name) {
+    private String getJsonFromResource(String name) throws IOException {
         String json = null;
-        InputStream is = this.getClass().getResourceAsStream(MessageFormat.format("/{0}.json", name));
-        if (is != null) {
-            final Scanner s = new Scanner(is);
-            try {
-                s.useDelimiter("\\A");
-                json = s.next();
-            } finally {
-                s.close();
+        URL resource = this.getClass().getResource(MessageFormat.format("/{0}.json", name));
+        if (resource != null) {
+            InputStream is = resource.openStream();
+            if (is != null) {
+                final Scanner s = new Scanner(is);
+                try {
+                    s.useDelimiter("\\A");
+                    json = s.next();
+                } finally {
+                    s.close();
+                }
             }
         }
         return json;

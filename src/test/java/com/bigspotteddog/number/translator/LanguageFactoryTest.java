@@ -1,5 +1,6 @@
 package com.bigspotteddog.number.translator;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ public class LanguageFactoryTest extends TestCase {
         factory.clearLanguages();
     }
 
-    public void testGetLanguage() {
+    public void testGetLanguage() throws IOException {
         Language language = new Language("en-US");
         factory.register("en-US", language);
         Language english = factory.getLanguage("en-US");
@@ -29,7 +30,7 @@ public class LanguageFactoryTest extends TestCase {
         assertEquals("es-MX", spanish.getName());
     }
 
-    public void testLoadLanguage() {
+    public void testLoadLanguage() throws IOException {
         String json = "{ \"name\": \"en-US\", \"numbers\": { 1: \"one\" } }";
         factory.register("en-US", json);
 
@@ -60,7 +61,7 @@ public class LanguageFactoryTest extends TestCase {
         assertEquals("en-US", language.getName());
     }
 
-    public void testRegisterFromResource() {
+    public void testRegisterFromResource() throws IOException {
         Language language = factory.getLanguage("en-US");
         assertNotNull(language);
 

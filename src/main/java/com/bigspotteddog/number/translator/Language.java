@@ -16,10 +16,6 @@ public class Language {
         return name;
     }
 
-    public void addNumber(int i, String string) {
-        numbers.put(i, string);
-    }
-
     public String getNumber(int number) {
         return numbers.get(number);
     }
