@@ -9,5 +9,9 @@
         13: "thirteen",
         30: "thirty",
         80: "eighty"
+    },
+    "scales": {
+        0: "hundred",
+        1: "thousand"
     }
 }

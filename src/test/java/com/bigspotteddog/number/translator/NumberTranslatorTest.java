@@ -34,9 +34,24 @@ public class NumberTranslatorTest extends TestCase {
         assertNotNull(words);
         assertEquals("eighty five", words);
 
-        words = translator.translate(237, "en-US");
+        words = translator.translate(5237, "en-US");
         assertNotNull(words);
-        assertEquals("two hundred and thirty seven", words);
+        assertEquals("five thousand two hundred and thirty seven", words);
+    }
+
+    public void testScaleImpl() {
+        NumberTranslator translator = new NumberTranslator();
+        int scale = translator.getScale(5237);
+        assertEquals(1, scale);
+
+        scale = translator.getScale(237);
+        assertEquals(0, scale);
+
+        scale = translator.getScale(1);
+        assertEquals(0, scale);
+
+        scale = translator.getScale(0);
+        assertEquals(-1, scale);
     }
 
     // Spike: Get numbers by scale (thousands, hundreds)
@@ -44,14 +59,14 @@ public class NumberTranslatorTest extends TestCase {
         long number = 5237;
 
         long value = number;
-        int scale = 0;
+        int scale = -1;
         while (value > 0) {
             value /= 1000;
             scale++;
         }
-        assertEquals(2, scale);
+        assertEquals(1, scale);
 
-        int divisor = (int) Math.pow(1000, scale - 1);
+        int divisor = (int) Math.pow(1000, scale);
         assertEquals(1000, divisor);
 
         int digits = (int) number / divisor;
@@ -60,7 +75,7 @@ public class NumberTranslatorTest extends TestCase {
         number %= divisor;
         scale--;
 
-        divisor = (int) Math.pow(1000, scale - 1);
+        divisor = (int) Math.pow(1000, scale);
         assertEquals(1, divisor);
 
         digits = (int) number / divisor;
