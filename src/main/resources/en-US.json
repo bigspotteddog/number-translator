@@ -3,6 +3,8 @@
     "numbers": {
         0: "zero",
         1: "one",
-        13: "thirteen"
+        5: "five",
+        13: "thirteen",
+        80: "eighty"
     }
 }

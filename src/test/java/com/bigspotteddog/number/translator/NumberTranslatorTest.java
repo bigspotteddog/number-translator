@@ -29,5 +29,10 @@ public class NumberTranslatorTest extends TestCase {
         words = translator.translate(13, "en-US");
         assertNotNull(words);
         assertEquals("thirteen", words);
+
+        words = translator.translate(85, "en-US");
+        assertNotNull(words);
+        assertEquals("eighty five", words);
+
     }
 }
