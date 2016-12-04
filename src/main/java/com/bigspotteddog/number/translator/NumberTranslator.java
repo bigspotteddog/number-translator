@@ -13,7 +13,20 @@ public class NumberTranslator {
         append(buf, words);
 
         if (words == null) {
-            int digits = (int) number % 100;
+            int digits = (int) number % 1000;
+            if (digits >= 100) {
+                words = language.getNumber(digits / 100);
+                if (words != null) {
+                    append(buf, words);
+                    append(buf, "hundred");
+                }
+
+                if (number >= 100) {
+                    append (buf, "and");
+                }
+            }
+
+            digits = (int) number % 100;
 
             words = language.getNumber(digits / 10 * 10);
             append(buf, words);
