@@ -17,4 +17,17 @@ public class LanguageFactoryTest extends TestCase {
         Language spanish = factory.getLanguage("es-MX");
         assertEquals("es-MX", spanish.getName());
     }
+
+    public void testLoadLanguage() {
+        LanguageFactory factory = LanguageFactory.instance();
+
+        String json = "{ \"name\": \"en-US\", \"numbers\": { 1: \"one\" } }";
+        factory.register("en-US", json);
+
+        Language english = factory.getLanguage("en-US");
+        assertEquals("en-US", english.getName());
+
+        String words = english.getNumber(1);
+        assertEquals("one", words);
+    }
 }
