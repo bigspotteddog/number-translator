@@ -38,4 +38,32 @@ public class NumberTranslatorTest extends TestCase {
         assertNotNull(words);
         assertEquals("two hundred and thirty seven", words);
     }
+
+    // Spike: Get numbers by scale (thousands, hundreds)
+    public void testScale() {
+        long number = 5237;
+
+        long value = number;
+        int scale = 0;
+        while (value > 0) {
+            value /= 1000;
+            scale++;
+        }
+        assertEquals(2, scale);
+
+        int divisor = (int) Math.pow(1000, scale - 1);
+        assertEquals(1000, divisor);
+
+        int digits = (int) number / divisor;
+        assertEquals(5, digits);
+
+        number %= divisor;
+        scale--;
+
+        divisor = (int) Math.pow(1000, scale - 1);
+        assertEquals(1, divisor);
+
+        digits = (int) number / divisor;
+        assertEquals(237, digits);
+    }
 }
