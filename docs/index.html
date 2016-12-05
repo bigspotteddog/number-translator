@@ -41,25 +41,35 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#translate').on('click', function(ev) {
-                $('#answer').empty();
+        var translate = function() {
+            $('#answer').empty();
 
-                var target = $('#input');
-                var value = target.val();
-                value = '"' + value + '"';
-                $.post({
-                    method: 'POST',
-                    url: 'https://ny837d3zf3.execute-api.us-east-1.amazonaws.com/production/prime',
-                    data: value,
-                    success: function(data, status, jqXHR) {
-                        console.log(data);
-                        $('#answer').html(data);
-                    },
-                    error: function() {
-                        $('#answer').html("An error has occurred");
-                    }
-                });
+            var target = $('#input');
+            var value = target.val();
+            value = '"' + value + '"';
+            $.post({
+                method: 'POST',
+                url: 'https://ny837d3zf3.execute-api.us-east-1.amazonaws.com/production/prime',
+                data: value,
+                success: function(data, status, jqXHR) {
+                    console.log(data);
+                    $('#answer').html(data);
+                },
+                error: function() {
+                    $('#answer').html("An error has occurred");
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('#input').on('keypress', function(ev) {
+                if (ev.keyCode === 13) {
+                    translate();
+                }
+            });
+
+            $('#translate').on('click', function(ev) {
+                translate();
             });
         });
     </script>
