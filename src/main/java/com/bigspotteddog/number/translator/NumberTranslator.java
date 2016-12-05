@@ -4,7 +4,6 @@ import java.io.IOException;
 
 public class NumberTranslator {
 
-    private static final long MAX_POW = 1000000000000000000L;
     private static final int MAX_SCALE = 6;
 
     public String translate(long number, String languageCode) throws IOException {
