@@ -167,6 +167,18 @@ public class NumberTranslatorTest extends TestCase {
         assertNotNull(words);
         assertEquals("One billion", words);
 
+        words = translator.translate(1000000000000L, "en-US");
+        assertNotNull(words);
+        assertEquals("One trillion", words);
+
+        words = translator.translate(1000000000000000L, "en-US");
+        assertNotNull(words);
+        assertEquals("One quadrillion", words);
+
+        words = translator.translate(1000000000000000000L, "en-US");
+        assertNotNull(words);
+        assertEquals("One quintillion", words);
+
     }
 
     public void testScaleImpl() {

@@ -22,12 +22,12 @@ public class NumberTranslator {
     private StringBuilder translate(long number, int scale, Language language, StringBuilder buf) {
         String words = null;
 
-        int divisor = (int) Math.pow(1000, scale);
-        int digits = (int) number / divisor;
+        long divisor = (long) Math.pow(1000, scale);
+        long digits = number / divisor;
 
         if (words == null) {
             if (digits >= 100) {
-                words = language.getNumber(digits / 100);
+                words = language.getNumber((int) digits / 100);
                 if (words != null) {
                     append(buf, words);
                     append(buf, language.getScale(0));
@@ -43,14 +43,14 @@ public class NumberTranslator {
 
             if (digits > 0) {
                 if (digits > 20) {
-                    words = language.getNumber(digits / 10 * 10);
+                    words = language.getNumber((int) digits / 10 * 10);
                     append(buf, words);
 
                     digits %= 10;
                 }
 
                 if (digits > 0) {
-                    words = language.getNumber(digits);
+                    words = language.getNumber((int) digits);
                     append(buf, words);
                 }
             }
