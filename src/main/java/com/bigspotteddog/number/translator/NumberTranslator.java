@@ -20,8 +20,7 @@ public class NumberTranslator {
     }
 
     private StringBuilder translate(long number, int scale, Language language, StringBuilder buf) {
-        String words = language.getNumber((int) number);
-        append(buf, words);
+        String words = null;
 
         int divisor = (int) Math.pow(1000, scale);
         int digits = (int) number / divisor;
@@ -33,25 +32,35 @@ public class NumberTranslator {
                     append(buf, words);
                     append(buf, language.getScale(0));
                 }
+            }
 
-                if (number >= 100) {
-                    append (buf, "and");
+            if (buf.length() > 0) {
+                digits = digits % 100;
+                if (digits > 0) {
+                    append(buf, "and");
                 }
             }
 
-            if (digits >= 10) {
-                digits %= 100;
-                words = language.getNumber(digits / 10 * 10);
-                append(buf, words);
-            }
+            if (digits > 0) {
+                if (digits > 20) {
+                    words = language.getNumber(digits / 10 * 10);
+                    append(buf, words);
 
-            words = language.getNumber(digits % 10);
-            append(buf, words);
+                    digits %= 10;
+                }
+
+                if (digits > 0) {
+                    words = language.getNumber(digits);
+                    append(buf, words);
+                }
+            }
         }
 
         if (scale > 0) {
-            words = language.getScale(scale);
-            append(buf, words);
+            if (digits > 0) {
+                words = language.getScale(scale);
+                append(buf, words);
+            }
 
             translate(number % divisor, scale - 1, language, buf);
         }
