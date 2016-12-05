@@ -20,23 +20,23 @@ public class NumberTranslatorTest extends TestCase {
 
         String words = translator.translate(1, "en-US");
         assertNotNull(words);
-        assertEquals("one", words);
+        assertEquals("One", words);
 
         words = translator.translate(0, "en-US");
         assertNotNull(words);
-        assertEquals("zero", words);
+        assertEquals("Zero", words);
 
         words = translator.translate(13, "en-US");
         assertNotNull(words);
-        assertEquals("thirteen", words);
+        assertEquals("Thirteen", words);
 
         words = translator.translate(85, "en-US");
         assertNotNull(words);
-        assertEquals("eighty five", words);
+        assertEquals("Eighty five", words);
 
         words = translator.translate(5237, "en-US");
         assertNotNull(words);
-        assertEquals("five thousand two hundred and thirty seven", words);
+        assertEquals("Five thousand two hundred and thirty seven", words);
     }
 
     public void testScaleImpl() {

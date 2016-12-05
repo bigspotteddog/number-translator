@@ -11,10 +11,10 @@ public class NumberTranslator {
 
         int scale = getScale(number);
         if (scale == -1) {
-            return language.getNumber(0);
+            append(buf, language.getNumber(0));
+        } else {
+            translate(number, scale, language, buf);
         }
-
-        translate(number, scale, language, buf);
 
         return buf.toString();
     }
@@ -73,6 +73,13 @@ public class NumberTranslator {
             if (buf.length() > 0) {
                 buf.append(' ');
             }
+
+            if (buf.length() == 0) {
+                char[] c = words.toCharArray();
+                c[0] = Character.toUpperCase(c[0]);
+                words = new String(c);
+            }
+
             buf.append(words);
         }
         return buf;
