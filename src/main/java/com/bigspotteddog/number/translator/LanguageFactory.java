@@ -28,15 +28,8 @@ public class LanguageFactory {
     }
 
     public Language getLanguage(String name) {
-        if (log.isLoggable(Level.FINE)) {
-            log.fine(MessageFormat.format("Retrieving language {0}", name));
-        }
-
         Language language = languages.get(name);
         if (language == null) {
-            if (log.isLoggable(Level.FINE)) {
-                log.fine(MessageFormat.format("Language {0} not found", name));
-            }
             try {
                 language = getLanguageFromResource(name);
             } catch (IOException e) {

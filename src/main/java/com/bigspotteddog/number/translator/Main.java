@@ -7,13 +7,17 @@ import java.text.NumberFormat;
 public class Main {
     private static final String USAGE = getUsage();
 
-    public static final void main(String[] args) throws IOException {
+    public static final int main(String[] args) throws IOException {
         if (args.length == 0) {
             String max = NumberFormat.getInstance().format(Long.MAX_VALUE);
             System.out.println(MessageFormat.format(USAGE, max));
-            return;
+            return -1;
         }
 
+        return new Main().translate(args);
+    }
+
+    private int translate(String[] args) throws IOException {
         long number = 0;
         try {
             String input = args[0];
@@ -30,13 +34,15 @@ public class Main {
             number = Long.parseLong(numberToTranslate);
         } catch (NumberFormatException e) {
             System.out.println("The number entered is not valid.");
-            return;
+            return -2;
         }
 
         NumberTranslator translator = new NumberTranslator();
         String words = translator.translate(number, "en-US");
 
         System.out.println(words);
+
+        return 0;
     }
 
     private static String getUsage() {
