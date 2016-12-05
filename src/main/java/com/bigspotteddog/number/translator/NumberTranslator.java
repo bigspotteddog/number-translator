@@ -4,6 +4,9 @@ import java.io.IOException;
 
 public class NumberTranslator {
 
+    private static final long MAX_POW = 1000000000000000000L;
+    private static final int MAX_SCALE = 6;
+
     public String translate(long number, String languageCode) throws IOException {
         Language language = LanguageFactory.instance().getLanguage(languageCode);
 
@@ -22,8 +25,17 @@ public class NumberTranslator {
     private StringBuilder translate(long number, int scale, Language language, StringBuilder buf) {
         String words = null;
 
-        long divisor = (long) Math.pow(1000, scale);
-        long digits = number / divisor;
+        long digits = number;
+
+        long pow = 0;
+        if (scale < MAX_SCALE) {
+            pow = (long) Math.pow(1000, scale + 1);
+            digits = number % pow;
+        }
+
+        digits = digits / (long) Math.pow(1000, scale);
+
+        long segment = digits;
 
         if (words == null) {
             if (digits >= 100) {
@@ -32,14 +44,18 @@ public class NumberTranslator {
                     append(buf, words);
                     append(buf, language.getScale(0));
                 }
-            }
 
-            if (buf.length() > 0) {
                 digits = digits % 100;
+
                 if (digits > 0) {
                     append(buf, "and");
                 }
+            } else {
+                if (number > 1000 && scale == 0 && digits > 0) {
+                    append(buf, "and");
+                }
             }
+
 
             if (digits > 0) {
                 if (digits > 20) {
@@ -57,12 +73,12 @@ public class NumberTranslator {
         }
 
         if (scale > 0) {
-            if (digits > 0) {
+            if (segment > 0) {
                 words = language.getScale(scale);
                 append(buf, words);
             }
 
-            translate(number % divisor, scale - 1, language, buf);
+            translate(number, scale - 1, language, buf);
         }
 
         return buf;

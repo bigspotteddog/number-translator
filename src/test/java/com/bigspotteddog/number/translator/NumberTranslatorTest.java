@@ -190,8 +190,25 @@ public class NumberTranslatorTest extends TestCase {
         words = translator.translate(1234567, "en-US");
         assertNotNull(words);
         assertEquals("One million two hundred and thirty four thousand five hundred and sixty seven", words);
+
+        words = translator.translate(100036007, "en-US");
+        assertNotNull(words);
+        assertEquals("One hundred million thirty six thousand and seven", words);
+
+        words = translator.translate(Long.MAX_VALUE, "en-US");
+        assertNotNull(words);
+        assertEquals("Nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and seven", words);
     }
 
+    public void testBroken() throws IOException {
+        NumberTranslator translator = new NumberTranslator();
+        assertNotNull(translator);
+
+        String words = translator.translate(100036007, "en-US");
+        assertNotNull(words);
+        assertEquals("One hundred million thirty six thousand and seven", words);
+
+    }
     public void testScaleImpl() {
         NumberTranslator translator = new NumberTranslator();
         int scale = translator.getScale(5237);
@@ -207,8 +224,7 @@ public class NumberTranslatorTest extends TestCase {
         assertEquals(-1, scale);
     }
 
-    // Spike: Get numbers by scale (thousands, hundreds)
-    public void testScale() {
+    public void testScaleSpike() {
         long number = 5237;
 
         long value = number;
@@ -233,5 +249,15 @@ public class NumberTranslatorTest extends TestCase {
 
         digits = (int) number / divisor;
         assertEquals(237, digits);
+    }
+
+    public void testGetDigitsSpike() {
+        long number = 123456789;
+
+        long digits = number % (long) Math.pow(1000, 2);
+        System.out.println(digits);
+
+        digits = digits / (long) Math.pow(1000, 1);
+        System.out.println(digits);
     }
 }
