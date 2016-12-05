@@ -260,4 +260,10 @@ public class NumberTranslatorTest extends TestCase {
         digits = digits / (long) Math.pow(1000, 1);
         assertEquals(456, digits);
     }
+
+    public void testNegative() throws IOException {
+        NumberTranslator translator = new NumberTranslator();
+        String words = translator.translate(-123, "en-US");
+        assertEquals("Negative one hundred and twenty three", words);
+    }
 }

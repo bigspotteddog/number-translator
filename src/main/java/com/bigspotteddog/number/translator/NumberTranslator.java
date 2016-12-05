@@ -24,6 +24,11 @@ public class NumberTranslator {
     private StringBuilder translate(long number, int scale, Language language, StringBuilder buf) {
         String words = null;
 
+        if (number < 0) {
+            number *= -1;
+            append(buf, "negative");
+        }
+
         long digits = number;
 
         long pow = 0;
@@ -84,9 +89,11 @@ public class NumberTranslator {
     }
 
     protected int getScale(long number) {
+        long value = Math.abs(number);
+
         int scale = -1;
-        while (number > 0) {
-            number /= 1000;
+        while (value > 0) {
+            value /= 1000;
             scale++;
         }
         return scale;

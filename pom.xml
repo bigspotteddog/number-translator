@@ -4,7 +4,7 @@
   <groupId>com.bigspotteddog.number.translator</groupId>
   <artifactId>number-translator</artifactId>
   <packaging>jar</packaging>
-  <version>0.8</version>
+  <version>1.0-SNAPSHOT</version>
   <name>number-translator</name>
   <url>http://maven.apache.org</url>
   <dependencies>
