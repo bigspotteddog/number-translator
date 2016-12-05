@@ -49,7 +49,7 @@ public class Main {
         return
                 new StringBuilder()
                 .append("\nThis utility translates numbers into their english word representations.\n")
-                .append("The maximum number that can be transalted is {0}.\n\n")
+                .append("The maximum number that can be transalted is +/- {0}.\n\n")
                 .append("Usage:\n\n")
                 .append("$ java -jar number-translator-<version>.jar <number to translate>\n")
                 .toString();
