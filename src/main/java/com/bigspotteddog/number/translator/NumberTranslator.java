@@ -6,7 +6,7 @@ public class NumberTranslator {
 
     private static final int MAX_SCALE = 6;
 
-    public String translate(long number, String languageCode) throws IOException {
+    public String translate(final long number, final String languageCode) throws IOException {
         Language language = LanguageFactory.instance().getLanguage(languageCode);
 
         StringBuilder buf = new StringBuilder();
@@ -15,19 +15,19 @@ public class NumberTranslator {
         if (scale == -1) {
             append(buf, language.getNumber(0));
         } else {
-            translate(number, scale, language, buf);
+            if (number < 0) {
+                append(buf, "negative");
+                translate(number * -1, scale, language, buf);
+            } else {
+                translate(number, scale, language, buf);
+            }
         }
 
         return buf.toString();
     }
 
-    private StringBuilder translate(long number, int scale, Language language, StringBuilder buf) {
+    private StringBuilder translate(final long number, final int scale, final Language language, final StringBuilder buf) {
         String words = null;
-
-        if (number < 0) {
-            number *= -1;
-            append(buf, "negative");
-        }
 
         long digits = number;
 
@@ -39,7 +39,7 @@ public class NumberTranslator {
 
         digits = digits / (long) Math.pow(1000, scale);
 
-        long segment = digits;
+        final long segment = digits;
 
         if (words == null) {
             if (digits >= 100) {
@@ -88,7 +88,7 @@ public class NumberTranslator {
         return buf;
     }
 
-    protected int getScale(long number) {
+    protected int getScale(final long number) {
         long value = Math.abs(number);
 
         int scale = -1;
@@ -99,7 +99,7 @@ public class NumberTranslator {
         return scale;
     }
 
-    private StringBuilder append(StringBuilder buf, String words) {
+    private StringBuilder append(final StringBuilder buf, final String words) {
         if (words != null) {
             if (buf.length() > 0) {
                 buf.append(' ');
@@ -108,10 +108,10 @@ public class NumberTranslator {
             if (buf.length() == 0) {
                 char[] c = words.toCharArray();
                 c[0] = Character.toUpperCase(c[0]);
-                words = new String(c);
+                buf.append(c);
+            } else {
+                buf.append(words);
             }
-
-            buf.append(words);
         }
         return buf;
     }

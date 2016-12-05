@@ -7,9 +7,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <style>
-        #answer {
-            margin-top: 20px;
-        }
+    #answer {
+        margin-top: 20px;
+        padding: 10px;
+
+        min-height: 100px;
+
+        font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+
+        border: 1px solid #ccc;
+        border-radius: 4px;
+
+        background-color: #f5f5f5;
+    }
     </style>
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -20,34 +30,23 @@
 <body>
     <div class="container">
         <h1>Number Translator</h1>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-inline">
-                    <div class="form-group">
-                        <label class="sr-only" for="input">Amount</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="input" placeholder="ex 123,456,789">
-                        </div>
-                    </div>
-                    <button id="translate" class="btn btn-primary">Translate</button>
-                </div>
-            </div>
+
+        <div class="form-group">
+            <label for="input">Number</label>
+            <input type="text" class="form-control" id="input" placeholder="ex 123,456,789">
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <pre id="answer">
-                </pre>
-            </div>
-        </div>
+        <button id="translate" class="btn btn-primary">Translate</button>
+        <div id="answer">
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#translate').on('click', function(ev) {
-                console.log(ev);
+                $('#answer').empty();
 
                 var target = $('#input');
                 var value = target.val();
+                value = '"' + value + '"';
                 $.post({
                     method: 'POST',
                     url: 'https://ny837d3zf3.execute-api.us-east-1.amazonaws.com/production/prime',
@@ -55,6 +54,9 @@
                     success: function(data, status, jqXHR) {
                         console.log(data);
                         $('#answer').html(data);
+                    },
+                    error: function() {
+                        $('#answer').html("An error has occurred");
                     }
                 });
             });
