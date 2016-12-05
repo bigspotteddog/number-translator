@@ -255,9 +255,9 @@ public class NumberTranslatorTest extends TestCase {
         long number = 123456789;
 
         long digits = number % (long) Math.pow(1000, 2);
-        System.out.println(digits);
+        assertEquals(456789, digits);
 
         digits = digits / (long) Math.pow(1000, 1);
-        System.out.println(digits);
+        assertEquals(456, digits);
     }
 }
