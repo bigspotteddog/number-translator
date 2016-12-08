@@ -266,4 +266,20 @@ public class NumberTranslatorTest extends TestCase {
         String words = translator.translate(-123, "en-US");
         assertEquals("Negative one hundred and twenty three", words);
     }
+
+    public void testScale() {
+        NumberTranslator translator = new NumberTranslator();
+
+        int scale = translator.getScale(Long.MIN_VALUE);
+        assertEquals(6, scale);
+
+        scale = translator.getScale(Long.MAX_VALUE);
+        assertEquals(6, scale);
+    }
+
+    public void testLongMinValue() throws IOException {
+        NumberTranslator translator = new NumberTranslator();
+        String words = translator.translate(Long.MIN_VALUE, "en-US");        
+        assertEquals("Negative nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and eight", words);
+    }
 }
