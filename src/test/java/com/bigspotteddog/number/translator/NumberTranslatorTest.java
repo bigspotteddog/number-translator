@@ -292,6 +292,14 @@ public class NumberTranslatorTest extends TestCase {
         assertNotNull(words);
         assertEquals("Negative one hundred and eight", words);
 
+        words = translator.translate(-118, "en-US");
+        assertNotNull(words);
+        assertEquals("Negative one hundred and eighteen", words);
+
+        words = translator.translate(-136, "en-US");
+        assertNotNull(words);
+        assertEquals("Negative one hundred and thirty six", words);
+
         words = translator.translate(-100036007, "en-US");
         assertNotNull(words);
         assertEquals("Negative one hundred million thirty six thousand and seven", words);
