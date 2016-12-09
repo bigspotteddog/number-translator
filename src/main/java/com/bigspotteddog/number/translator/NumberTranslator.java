@@ -59,7 +59,7 @@ public class NumberTranslator {
                     append(buf, "and");
                 }
             } else {
-                if (number > 1000 && scale == 0 && digits > 0) {
+                if ((number > 1000 || number < -1000) && scale == 0 && digits > 0) {
                     append(buf, "and");
                 }
             }

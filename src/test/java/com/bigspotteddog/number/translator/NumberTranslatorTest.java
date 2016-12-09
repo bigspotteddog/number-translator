@@ -279,7 +279,21 @@ public class NumberTranslatorTest extends TestCase {
 
     public void testLongMinValue() throws IOException {
         NumberTranslator translator = new NumberTranslator();
-        String words = translator.translate(Long.MIN_VALUE, "en-US");        
+        String words = translator.translate(Long.MIN_VALUE, "en-US");
         assertEquals("Negative nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and eight", words);
+    }
+
+    public void testNegativeAnds() throws IOException {
+        NumberTranslator translator = new NumberTranslator();
+        String words = translator.translate(-1008, "en-US");
+        assertEquals("Negative one thousand and eight", words);
+
+        words = translator.translate(-108, "en-US");
+        assertNotNull(words);
+        assertEquals("Negative one hundred and eight", words);
+
+        words = translator.translate(-100036007, "en-US");
+        assertNotNull(words);
+        assertEquals("Negative one hundred million thirty six thousand and seven", words);
     }
 }
