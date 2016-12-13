@@ -17,7 +17,7 @@ public class NumberTranslator {
         } else {
             if (number < 0) {
                 append(buf, "negative");
-                translate(number * -1, scale, language, buf);
+                translate(number, scale, language, buf);
             } else {
                 translate(number, scale, language, buf);
             }
@@ -39,6 +39,10 @@ public class NumberTranslator {
 
         digits = digits / (long) Math.pow(1000, scale);
 
+        if (digits < 0) {
+            digits = Math.abs(digits);
+        }
+
         final long segment = digits;
 
         if (words == null) {
@@ -55,7 +59,7 @@ public class NumberTranslator {
                     append(buf, "and");
                 }
             } else {
-                if (number > 1000 && scale == 0 && digits > 0) {
+                if ((number > 1000 || number < -1000) && scale == 0 && digits > 0) {
                     append(buf, "and");
                 }
             }
@@ -89,10 +93,10 @@ public class NumberTranslator {
     }
 
     protected int getScale(final long number) {
-        long value = Math.abs(number);
+        long value = number;
 
         int scale = -1;
-        while (value > 0) {
+        while (value / 1 != 0) {
             value /= 1000;
             scale++;
         }
