@@ -1,5 +1,5 @@
 # A Number Translator
-[![Build Status](https://travis-ci.org/bigspotteddog/number-translator.svg)](https://travis-ci.org/bigspotteddog/number-translator)
+[![Build Status](https://travis-ci.org/bigspotteddog/number-translator.svg)](https://travis-ci.org/bigspotteddog/number-translator)[![Code Coverage](https://img.shields.io/codecov/c/github/bigspotteddog/number-translator/develop.svg)](https://codecov.io/github/bigspotteddog/number-translator?branch=develop)
 
 ## Demo
 
