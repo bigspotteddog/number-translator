@@ -1,6 +1,6 @@
 sudo: false
 language: java
-script: mvn test package
+script: mvn cobertura:cobertura package
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
