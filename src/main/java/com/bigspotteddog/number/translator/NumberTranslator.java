@@ -45,38 +45,36 @@ public class NumberTranslator {
 
         final long segment = digits;
 
-        if (words == null) {
-            if (digits >= 100) {
-                words = language.getNumber((int) digits / 100);
-                if (words != null) {
-                    append(buf, words);
-                    append(buf, language.getScale(0));
-                }
-
-                digits = digits % 100;
-
-                if (digits > 0) {
-                    append(buf, "and");
-                }
-            } else {
-                if ((number > 1000 || number < -1000) && scale == 0 && digits > 0) {
-                    append(buf, "and");
-                }
+        if (digits >= 100) {
+            words = language.getNumber((int) digits / 100);
+            if (words != null) {
+                append(buf, words);
+                append(buf, language.getScale(0));
             }
 
+            digits = digits % 100;
 
             if (digits > 0) {
-                if (digits > 20) {
-                    words = language.getNumber((int) digits / 10 * 10);
-                    append(buf, words);
+                append(buf, "and");
+            }
+        } else {
+            if ((number > 1000 || number < -1000) && scale == 0 && digits > 0) {
+                append(buf, "and");
+            }
+        }
 
-                    digits %= 10;
-                }
 
-                if (digits > 0) {
-                    words = language.getNumber((int) digits);
-                    append(buf, words);
-                }
+        if (digits > 0) {
+            if (digits > 20) {
+                words = language.getNumber((int) digits / 10 * 10);
+                append(buf, words);
+
+                digits %= 10;
+            }
+
+            if (digits > 0) {
+                words = language.getNumber((int) digits);
+                append(buf, words);
             }
         }
 
