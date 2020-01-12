@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class NumberTranslator {
 
+    private static final int NO_SCALE = -1;
     private static final int MAX_SCALE = 6;
 
     public String translate(final long number, final String languageCode) throws IOException {
@@ -12,7 +13,7 @@ public class NumberTranslator {
         StringBuilder buf = new StringBuilder();
 
         int scale = getScale(number);
-        if (scale == -1) {
+        if (scale == NO_SCALE) {
             append(buf, language.getNumber(0));
         } else {
             if (number < 0) {
@@ -93,7 +94,7 @@ public class NumberTranslator {
     protected int getScale(final long number) {
         long value = number;
 
-        int scale = -1;
+        int scale = NO_SCALE;
         while (value / 1 != 0) {
             value /= 1000;
             scale++;
